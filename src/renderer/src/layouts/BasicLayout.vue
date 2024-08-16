@@ -31,20 +31,19 @@ const { showTopLayout, showBottomLayout } = storeToRefs(settingStore)
 </script>
 
 <style lang="less" scoped>
-@import '../style/global.less';
 #main {
   width: 100%;
   height: 100%;
   #top {
     width: 100%;
-    background-color: #ccc;
   }
   #center {
     width: 100%;
-    // height: calc(100% - @topHeight - @bottomHeight);
     display: flex;
+    background-color: #fff;
     #left {
       height: 100%;
+      user-select: none;
     }
     #right {
       flex-shrink: 0;
@@ -54,8 +53,6 @@ const { showTopLayout, showBottomLayout } = storeToRefs(settingStore)
   }
   #bottom {
     width: 100%;
-    background-color: #000;
-    color: #fff;
   }
 }
 </style>

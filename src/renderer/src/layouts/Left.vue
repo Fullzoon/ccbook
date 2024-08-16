@@ -1,18 +1,21 @@
 <template>
   <div class="main">
     <div class="head">
-      <a-button type="primary" style="margin-bottom: 16px" @click="toggleCollapsed">
-        <MenuUnfoldOutlined v-if="state.collapsed" />
+      <a-button style="margin-bottom: 16px" @click="toggleCollapsed">
+        <MenuUnfoldOutlined v-if="styleStore.menuCollapsed" />
         <MenuFoldOutlined v-else />
       </a-button>
     </div>
     <a-menu
       mode="inline"
       class="menu"
+      :style="{
+        width: styleStore.menuCollapsed ? '80px' : styleStore.leftLayoutWidth
+      }"
       @click="clickMenuItem"
       v-model:openKeys="state.openKeys"
       v-model:selectedKeys="state.selectedKeys"
-      :inline-collapsed="state.collapsed"
+      :inline-collapsed="styleStore.menuCollapsed"
       :items="menuMap"
     ></a-menu>
   </div>
@@ -23,11 +26,12 @@ import { reactive, watch, h, onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue'
 import routeMap from '../router/routes.js'
+import useStyleStore from '../stores/style'
 
+const styleStore = useStyleStore()
 const route = useRoute()
 const router = useRouter()
 const state = reactive({
-  collapsed: false,
   activeKey: route.name,
   selectedKeys: [],
   openKeys: [],
@@ -35,7 +39,10 @@ const state = reactive({
 let menuMap = []
 
 const toggleCollapsed = () => {
-  state.collapsed = !state.collapsed
+  styleStore.menuCollapsed = !styleStore.menuCollapsed
+
+  console.log(styleStore.menuCollapsed);
+  console.log(styleStore.leftLayoutWidth);
 }
 const clickMenuItem = ({ item, key, keyPath }) => {
   if (state.activeKey === key) return
@@ -86,7 +93,6 @@ watch(
 </script>
 
 <style lang="less" scoped>
-@import '../style/global.less';
 .main {
   width: 100%;
   height: 100%;
@@ -96,13 +102,10 @@ watch(
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #00ffaa;
+    background-color: #F0F0F0;
   }
   .menu {
     height: calc(100% - 50px);
-    &.ant-menu-inline {
-      width: @leftWidth;
-    }
   }
 }
 </style>

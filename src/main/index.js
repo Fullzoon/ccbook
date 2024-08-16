@@ -3,13 +3,18 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+let mainWindow
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+  mainWindow = new BrowserWindow({
+    width: 1100,
+    height: 900,
+    title: 'ccbook',
     show: false,
     autoHideMenuBar: true,
+    frame: false,
+    transparent: true,
+    hasShadow: false,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       devTools: true,
@@ -50,7 +55,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron')
+  electronApp.setAppUserModelId('com.ccbook')
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
@@ -60,10 +65,25 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on(
-    'ping',
-    () => console.log((new Date()).getTime())
-  )
+  ipcMain.on('ping', () => {
+    console.log((new Date()).getTime())
+  })
+  // 窗口最小化
+  ipcMain.on('windowMin', (event) => {
+    mainWindow.minimize()
+  })
+  // 窗口最大化
+  ipcMain.on('windowMax', (event) => {
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize()
+    } else {
+      mainWindow.maximize()
+    }
+  })
+  // 窗口关闭
+  ipcMain.on('windowClose', (event) => {
+    mainWindow.close()
+  })
 
   createWindow()
 

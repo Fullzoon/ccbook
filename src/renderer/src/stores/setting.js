@@ -2,7 +2,7 @@ import { defineStore } from "pinia"
 
 const useSettingStore = defineStore('setting', {
   state: () => ({
-    title: 'Hello world ccbook',
+    title: '彳亍',
     showTopLayout: true,
     showBottomLayout: true,
   }),
