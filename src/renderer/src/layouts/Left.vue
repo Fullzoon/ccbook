@@ -1,16 +1,15 @@
 <template>
   <div class="main">
-    <div class="head">
-      <a-button style="margin-bottom: 16px" @click="toggleCollapsed">
-        <MenuUnfoldOutlined v-if="styleStore.menuCollapsed" />
-        <MenuFoldOutlined v-else />
-      </a-button>
+    <div class="head" @click="toggleCollapsed">
+      <MenuUnfoldOutlined v-if="styleStore.menuCollapsed" />
+      <MenuFoldOutlined v-else />
     </div>
     <a-menu
       mode="inline"
       class="menu"
       :style="{
-        width: styleStore.menuCollapsed ? '80px' : styleStore.leftLayoutWidth
+        width: styleStore.menuCollapsed ? '80px' : styleStore.leftLayoutWidth,
+        backgroundColor: '#ffffff00'
       }"
       @click="clickMenuItem"
       v-model:openKeys="state.openKeys"
@@ -34,15 +33,12 @@ const router = useRouter()
 const state = reactive({
   activeKey: route.name,
   selectedKeys: [],
-  openKeys: [],
+  openKeys: []
 })
 let menuMap = []
 
 const toggleCollapsed = () => {
   styleStore.menuCollapsed = !styleStore.menuCollapsed
-
-  console.log(styleStore.menuCollapsed);
-  console.log(styleStore.leftLayoutWidth);
 }
 const clickMenuItem = ({ item, key, keyPath }) => {
   if (state.activeKey === key) return
@@ -68,8 +64,7 @@ const formattingRoutes = (routes) => {
         children: Array.isArray(item.children) ? formattingRoutes(item.children) : null
       }
     })
-  }
-  else {
+  } else {
     return []
   }
 }
@@ -83,29 +78,42 @@ onBeforeMount(() => {
   menuMap = reactive(formattingRoutes(routeMap))
 })
 
-watch(
-  route,
-  (toRoute, fromRoute) => {
-    state.activeKey = toRoute.name
-    state.selectedKeys = [toRoute.name]
+watch(route, (toRoute, fromRoute) => {
+  state.activeKey = toRoute.name
+  state.selectedKeys = [toRoute.name]
 })
-
 </script>
 
 <style lang="less" scoped>
 .main {
   width: 100%;
   height: 100%;
+  user-select: none;
+  -webkit-app-region: drag;
   .head {
-    height: 50px;
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+    height: 40px;
     width: 100%;
+    border-right: 1px solid #0000000f;
+    border-bottom: 1px solid #0000000f;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #F0F0F0;
+    span {
+      transition: all ease-in-out .1s;
+    }
+    &:hover {
+      span {
+        transform: scale(1.2);
+      }
+    }
   }
   .menu {
-    height: calc(100% - 50px);
+    height: calc(100% - 40px);
+    :deep(.ant-menu-item) {
+      -webkit-app-region: no-drag;
+    }
   }
 }
 </style>

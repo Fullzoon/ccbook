@@ -1,8 +1,11 @@
 <template>
-  <div class="main" :style="{
-    backgroundColor: styleStore.globalColorPrimary
-  }">
+  <div
+    class="main"
+    :style="{
+      backgroundColor: styleStore.bottomLayoutBGC + styleStore.BGCTransTo16
+    }">
     Bottom
+    {{ $env }}
   </div>
 </template>
 
@@ -16,7 +19,6 @@ const styleStore = useStyleStore()
 .main {
   width: 100%;
   height: 100%;
-  background-color: #000;
   color: #fff;
   border-radius: 0 0 10px 10px;
 }

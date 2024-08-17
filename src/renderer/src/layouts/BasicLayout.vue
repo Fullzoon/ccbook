@@ -1,17 +1,40 @@
 <template>
   <div id="main">
-    <div id="top" v-if="showTopLayout" :style="{ height: styleStore.topLayoutHeight }">
+    <div
+      id="top"
+      v-if="showTopLayout"
+      :style="{
+        height: styleStore.topLayoutHeight + 'px',
+      }">
       <TopLayout></TopLayout>
     </div>
-    <div id="center" :style="{ height: `calc(100% - ${showTopLayout?styleStore.topLayoutHeight:'0px'} - ${showBottomLayout?styleStore.bottomLayoutHeight:'0px'})`}">
-      <div id="left">
+    <div
+      id="center"
+      :style="{
+        height: `calc(100% - ${showTopLayout?styleStore.topLayoutHeight:0}px - ${showBottomLayout?styleStore.bottomLayoutHeight:0}px)`,
+        backgroundColor: styleStore.centerLayoutBGC + styleStore.BGCTransTo16,
+      }">
+      <div
+        id="left"
+        :style="{
+
+        }">
         <LeftLayout></LeftLayout>
       </div>
-      <div id="right">
+      <div
+        id="right"
+        :style="{
+
+        }">
         <router-view />
       </div>
     </div>
-    <div id="bottom" v-if="showBottomLayout" :style="{ height: styleStore.bottomLayoutHeight }">
+    <div
+      id="bottom"
+      v-if="showBottomLayout"
+      :style="{
+        height: styleStore.bottomLayoutHeight + 'px'
+      }">
       <BottomLayout></BottomLayout>
     </div>
   </div>
@@ -40,15 +63,14 @@ const { showTopLayout, showBottomLayout } = storeToRefs(settingStore)
   #center {
     width: 100%;
     display: flex;
-    background-color: #fff;
     #left {
       height: 100%;
-      user-select: none;
     }
     #right {
-      flex-shrink: 0;
       flex: 1;
+      flex-shrink: 0;
       height: 100%;
+      overflow-y: auto;
     }
   }
   #bottom {

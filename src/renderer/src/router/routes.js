@@ -1,7 +1,9 @@
 import {
-  AppleOutlined,
+  BookOutlined,
+  SearchOutlined,
+  EditOutlined,
   SettingOutlined,
-  BarChartOutlined
+  InfoCircleOutlined,
 } from '@ant-design/icons-vue'
 
 const routeMap = [
@@ -9,10 +11,28 @@ const routeMap = [
     path: '/main',
     name: 'main',
     meta: {
-      title: '欢迎',
-      icon: AppleOutlined
+      title: '主页',
+      icon: BookOutlined
     },
     component: () => import('../views/main/index.vue')
+  },
+  {
+    path: '/search',
+    name: 'search',
+    meta: {
+      title: '搜索',
+      icon: SearchOutlined
+    },
+    component: () => import('../views/search/index.vue')
+  },
+  {
+    path: '/rule',
+    name: 'rule',
+    meta: {
+      title: '规则',
+      icon: EditOutlined
+    },
+    component: () => import('../views/rule/index.vue')
   },
   {
     path: '/setting',
@@ -23,6 +43,15 @@ const routeMap = [
     },
     component: () => import('../views/setting/index.vue')
   },
+  {
+    path: '/about',
+    name: 'about',
+    meta: {
+      title: '关于',
+      icon: InfoCircleOutlined,
+    },
+    component: () => import('../views/about/index.vue')
+  }
   /* {
     path: '/dataBoard',
     name: 'dataBoard',
