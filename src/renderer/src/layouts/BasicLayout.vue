@@ -23,6 +23,7 @@
       </div>
       <div
         id="right"
+        class="custom-scroller1"
         :style="{
 
         }">

@@ -1,10 +1,14 @@
 <template>
   <div class="main">
-    about
+    <div>
+      about
+    </div>
+    <Versions />
   </div>
 </template>
 
 <script setup>
+import Versions from '../../components/Versions.vue'
 
 </script>
 
