@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 
-const useBookshelfStore = defineStore('bookshelf', {
+const useBookStore = defineStore('book', {
   state: () => ({
     groupList: [
       {
@@ -20,16 +20,20 @@ const useBookshelfStore = defineStore('bookshelf', {
       //   deletable: false,
       // }
     ],
-    // bookList: [
-    //   {
-    //     id: '1723983969579',
-    //     name: '样例1',
-    //     image: 'https://image.jpg',
-    //     source: 'local', // onlion
-    //   }
-    // ]
+    bookList: [
+      // {
+      //   id: '1723983969579',
+      //   originName: '样例1',
+      //   name: '样例1',
+      //   image: 'https://image.jpg',
+      //   source: 'local', // onlion
+      //   group: '',
+      //   createTime: '1723983969579',
+      //   readTime: '1723983969579',
+      // }
+    ]
   }),
-  // persist: true
+  persist: true
 })
 
-export default useBookshelfStore
+export default useBookStore
