@@ -14,7 +14,7 @@
         </label>
       </div>
     </div>
-    <div class="book-list" v-if="bookStore.bookList.length">
+    <div class="book-list">
       <div
         class="book"
         v-for="(book, index) in bookStore.bookList"
@@ -35,9 +35,9 @@
           {{ book.name }}
         </div>
       </div>
-    </div>
-    <div class="no-book" v-else>
-      <a-empty description="暂无书籍" />
+      <div class="no-book" v-if="!bookStore.bookList.length">
+        <a-empty description="暂无书籍" />
+      </div>
     </div>
   </div>
 </template>
@@ -92,6 +92,23 @@ const handleAddBook = async e => {
 
   e.target.value = ''
 }
+// const addBook = async e => {
+//   // 文件选择器选项配置
+//   const [fileHandle] = await window.showOpenFilePicker({
+//     excludeAcceptAllOption: true,
+//     startIn: 'desktop',
+//     multiple: false,
+//     types: [
+//       {
+//         description: "TXT文本文件",
+//         accept: {
+//           'text/plain': ['.txt', '.text'],
+//         },
+//       },
+//     ]
+//   })
+//   console.log('fileHandle', fileHandle.getFile())
+// }
 const handleOpenBook = book => {
   try {
     fs.opendirSync(`./book/${book.id}`)
@@ -188,10 +205,14 @@ const funAddBook = file => {
         text-align: center;
         font-size: 20px;
         cursor: pointer;
+        &:hover {
+          background-color: #F0F0F0;
+        }
       }
     }
   }
   .book-list {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     padding: 20px;
@@ -235,10 +256,15 @@ const funAddBook = file => {
         box-shadow: 0 0px 10px rgba(0,0,0,.35);
       }
     }
-  }
-  .no-book {
-    padding: 100px 0;
-    color: #ccc;
+    .no-book {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 100px 0;
+      color: #ccc;
+    }
   }
 }
 </style>
